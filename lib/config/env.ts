@@ -12,9 +12,12 @@ const envSchema = z.object({
 });
 
 export const env = envSchema.parse({
-  DATABASE_URL: process.env.DATABASE_URL ?? "https://example.com/database",
-  DIRECT_DATABASE_URL: process.env.DIRECT_DATABASE_URL ?? "https://example.com/direct-database",
-  AUTH_SECRET: process.env.AUTH_SECRET ?? "development-secret-value",
+  DATABASE_URL:
+    process.env.DATABASE_URL ?? "postgres://postgres:postgres@127.0.0.1:5432/appointment_booking",
+  DIRECT_DATABASE_URL:
+    process.env.DIRECT_DATABASE_URL ??
+    "postgres://postgres:postgres@127.0.0.1:5432/appointment_booking",
+  AUTH_SECRET: process.env.AUTH_SECRET ?? "development-secret-value-123",
   AUTH_TRUST_HOST: process.env.AUTH_TRUST_HOST,
   ADMIN_EMAIL: process.env.ADMIN_EMAIL ?? "admin@example.com",
   ADMIN_PASSWORD: process.env.ADMIN_PASSWORD ?? "password123",

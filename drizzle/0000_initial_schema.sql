@@ -1,3 +1,5 @@
+create extension if not exists pgcrypto;
+
 create type admin_role as enum ('admin');
 create type time_off_status as enum ('scheduled', 'canceled');
 create type appointment_status as enum ('pending', 'confirmed', 'canceled');
@@ -82,7 +84,8 @@ create table appointments (
   updated_at timestamptz not null default now()
 );
 
-create unique index appointments_active_slot_idx on appointments (doctor_id, appointment_date, start_time);
+create unique index appointments_active_slot_idx on appointments (doctor_id, appointment_date, start_time)
+where status in ('pending', 'confirmed');
 create index appointments_doctor_date_idx on appointments (doctor_id, appointment_date);
 
 create table appointment_audit_log (
@@ -110,4 +113,3 @@ create table notification_events (
 );
 
 create index notification_events_status_schedule_idx on notification_events (status, scheduled_for);
-

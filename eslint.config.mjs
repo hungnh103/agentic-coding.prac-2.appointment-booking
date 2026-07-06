@@ -9,7 +9,8 @@ export default tseslint.config(
       "coverage/**",
       "playwright-report/**",
       "test-results/**",
-      "node_modules/**"
+      "node_modules/**",
+      "next-env.d.ts"
     ]
   },
   js.configs.recommended,

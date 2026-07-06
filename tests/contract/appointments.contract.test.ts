@@ -1,14 +1,9 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { POST as appointmentsPost } from "@/app/api/appointments/route";
 import { getDefaultBookingDate } from "@/lib/appointments/booking-service";
-import { resetMockStore } from "@/lib/db/mock-store";
 
 describe("appointments contract", () => {
-  beforeEach(() => {
-    resetMockStore();
-  });
-
   it("creates an appointment with the expected response shape", async () => {
     const response = await appointmentsPost(
       new Request("http://localhost/api/appointments", {

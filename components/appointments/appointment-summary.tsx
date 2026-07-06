@@ -48,8 +48,13 @@ export function AppointmentSummary({ appointment }: AppointmentSummaryProps) {
           <dt className="text-sm text-stone-600">Contact</dt>
           <dd className="mt-1 text-lg font-semibold text-slate-950">{appointment.patient.phone}</dd>
         </div>
+        {appointment.patient.email ? (
+          <div className="rounded-[1.5rem] bg-white p-5 ring-1 ring-brand-100">
+            <dt className="text-sm text-stone-600">Email</dt>
+            <dd className="mt-1 text-lg font-semibold text-slate-950">{appointment.patient.email}</dd>
+          </div>
+        ) : null}
       </dl>
     </section>
   );
 }
-

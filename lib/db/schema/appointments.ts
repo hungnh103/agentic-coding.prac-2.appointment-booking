@@ -1,4 +1,4 @@
-import { date, index, pgEnum, pgTable, text, time, timestamp, uniqueIndex, uuid } from "drizzle-orm/pg-core";
+import { date, index, pgEnum, pgTable, text, time, timestamp, uuid } from "drizzle-orm/pg-core";
 
 export const appointmentStatusEnum = pgEnum("appointment_status", ["pending", "confirmed", "canceled"]);
 
@@ -22,8 +22,6 @@ export const appointments = pgTable(
     updatedAt: timestamp("updated_at", { withTimezone: true }).defaultNow().notNull()
   },
   (table) => ({
-    doctorSlotIdx: index("appointments_doctor_date_idx").on(table.doctorId, table.appointmentDate),
-    uniqueDoctorSlot: uniqueIndex("appointments_active_slot_idx").on(table.doctorId, table.appointmentDate, table.startTime)
+    doctorSlotIdx: index("appointments_doctor_date_idx").on(table.doctorId, table.appointmentDate)
   })
 );
-

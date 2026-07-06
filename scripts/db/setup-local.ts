@@ -1,9 +1,8 @@
-import { seedDatabase, waitForDatabase } from "./db/shared";
+import { setupLocalDatabase } from "./shared";
 
 async function main() {
-  await waitForDatabase();
-  await seedDatabase();
-  console.log("Seed data applied.");
+  await setupLocalDatabase();
+  console.log("Local Postgres container, schema, and seed data are ready.");
 }
 
 main().catch((error) => {

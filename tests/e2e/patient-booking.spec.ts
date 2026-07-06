@@ -4,6 +4,8 @@ test("patient can open availability and submit a booking request", async ({ page
   await page.goto("/doctors/11111111-1111-1111-1111-111111111111");
 
   await expect(page.getByRole("heading", { name: "Dr. Lan Ngo" })).toBeVisible();
+  await expect(page.getByText(/choose a slot to prefill the booking request/i)).toBeVisible();
+  await expect(page.getByRole("textbox", { name: "Full name" })).toBeVisible();
   await page.getByLabel("Full name").fill("Jamie Patient");
   await page.getByLabel("Phone").fill("0123456789");
   await page.getByLabel("Email").fill("jamie@example.com");
@@ -11,4 +13,6 @@ test("patient can open availability and submit a booking request", async ({ page
 
   await expect(page).toHaveURL(/\/appointments\//);
   await expect(page.getByText("Appointment summary")).toBeVisible();
+  await expect(page.getByText("Status timeline")).toBeVisible();
+  await expect(page.getByText(/pending clinic confirmation/i)).toBeVisible();
 });

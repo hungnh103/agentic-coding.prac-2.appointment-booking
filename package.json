@@ -14,9 +14,13 @@
     "test:e2e": "playwright test",
     "db:generate": "drizzle-kit generate",
     "db:migrate": "drizzle-kit migrate",
+    "db:start-local": "tsx scripts/db/start-local.ts",
+    "db:reset-local": "tsx scripts/db/reset-local.ts",
+    "db:setup-local": "tsx scripts/db/setup-local.ts",
+    "db:seed": "tsx scripts/seed.ts",
     "cf:preview": "opennextjs-cloudflare build && wrangler dev",
     "deploy": "opennextjs-cloudflare build && wrangler deploy",
-    "seed": "tsx scripts/seed.ts",
+    "seed": "pnpm db:seed",
     "perf:availability": "tsx scripts/perf/check-availability.ts"
   },
   "dependencies": {
@@ -64,4 +68,3 @@
     "yaml": "^2.6.0"
   }
 }
-

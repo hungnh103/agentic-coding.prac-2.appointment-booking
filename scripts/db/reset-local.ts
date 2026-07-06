@@ -1,9 +1,10 @@
-import { seedDatabase, waitForDatabase } from "./db/shared";
+import { resetDatabase, seedDatabase, waitForDatabase } from "./shared";
 
 async function main() {
   await waitForDatabase();
+  await resetDatabase();
   await seedDatabase();
-  console.log("Seed data applied.");
+  console.log("Local database reset and seeded.");
 }
 
 main().catch((error) => {

@@ -1,4 +1,7 @@
-import { createPatient, getPatientById } from "@/lib/db/mock-store";
+import { eq } from "drizzle-orm";
+
+import { db } from "@/lib/db/client";
+import { patients } from "@/lib/db/schema";
 
 type CreatePatientInput = {
   fullName: string;
@@ -8,10 +11,11 @@ type CreatePatientInput = {
 };
 
 export async function insertPatient(input: CreatePatientInput) {
-  return createPatient(input);
+  const [patient] = await db.insert(patients).values(input).returning();
+  return patient;
 }
 
 export async function getPatient(patientId: string) {
-  return getPatientById(patientId);
+  const [patient] = await db.select().from(patients).where(eq(patients.id, patientId));
+  return patient ?? null;
 }
-

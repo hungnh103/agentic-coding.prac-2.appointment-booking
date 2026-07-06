@@ -75,7 +75,7 @@
 - [X] T024 [US1] Implement patient API routes in `app/api/doctors/route.ts`, `app/api/doctors/[doctorId]/availability/route.ts`, and `app/api/appointments/route.ts`
 - [X] T025 [P] [US1] Build patient availability browsing and booking form UI in `app/(marketing)/page.tsx`, `app/doctors/[doctorId]/page.tsx`, `components/availability/availability-calendar.tsx`, and `components/appointments/booking-form.tsx`
 - [X] T026 [US1] Build the patient appointment summary and resilient loading or error states in `app/appointments/[appointmentId]/page.tsx`, `app/doctors/[doctorId]/loading.tsx`, `app/doctors/[doctorId]/error.tsx`, and `components/appointments/appointment-summary.tsx`
-- [ ] T027 [US1] Add accessibility, copy, and availability performance assertions in `tests/e2e/patient-booking.spec.ts` and `scripts/perf/check-availability.ts`
+- [X] T027 [US1] Add accessibility, copy, and availability performance assertions in `tests/e2e/patient-booking.spec.ts` and `scripts/perf/check-availability.ts`
 
 **Checkpoint**: User Story 1 is fully functional and independently testable as the MVP.
 
@@ -89,17 +89,17 @@
 
 ### Tests for User Story 2
 
-- [ ] T028 [P] [US2] Add integration tests for confirmation delivery, cancellation notices, and reminder skipping in `tests/integration/notification-workflows.test.ts`
-- [ ] T029 [P] [US2] Add unit tests for notification scheduling and reminder eligibility in `tests/unit/notification-service.test.ts` and `tests/unit/reminder-service.test.ts`
-- [ ] T030 [P] [US2] Add Playwright coverage for patient appointment status updates and reminder-ready messaging in `tests/e2e/appointment-status.spec.ts`
+- [X] T028 [P] [US2] Add integration tests for confirmation delivery, cancellation notices, and reminder skipping in `tests/integration/notification-workflows.test.ts`
+- [X] T029 [P] [US2] Add unit tests for notification scheduling and reminder eligibility in `tests/unit/notification-service.test.ts` and `tests/unit/reminder-service.test.ts`
+- [X] T030 [P] [US2] Add Playwright coverage for patient appointment status updates and reminder-ready messaging in `tests/e2e/appointment-status.spec.ts`
 
 ### Implementation for User Story 2
 
-- [ ] T031 [P] [US2] Implement notification event queries and email adapter abstractions in `lib/db/queries/notifications.ts` and `lib/notifications/email-adapter.ts`
-- [ ] T032 [US2] Implement notification composition, scheduling, and reminder processing services in `lib/notifications/message-builder.ts`, `lib/notifications/notification-service.ts`, and `lib/notifications/reminder-service.ts`
-- [ ] T033 [US2] Implement the reminder job execution path for local preview and deployment in `app/api/cron/reminders/route.ts` and `lib/notifications/run-reminders.ts`
-- [ ] T034 [P] [US2] Build patient appointment status timeline UI in `app/appointments/[appointmentId]/page.tsx` and `components/appointments/appointment-status-timeline.tsx`
-- [ ] T035 [US2] Implement appointment detail loading with notification-aware status mapping in `lib/appointments/appointment-detail-service.ts` and `app/appointments/[appointmentId]/page.tsx`
+- [X] T031 [P] [US2] Implement notification event queries and email adapter abstractions in `lib/db/queries/notifications.ts` and `lib/notifications/email-adapter.ts`
+- [X] T032 [US2] Implement notification composition, scheduling, and reminder processing services in `lib/notifications/message-builder.ts`, `lib/notifications/notification-service.ts`, and `lib/notifications/reminder-service.ts`
+- [X] T033 [US2] Implement the reminder job execution path for local preview and deployment in `app/api/cron/reminders/route.ts` and `lib/notifications/run-reminders.ts`
+- [X] T034 [P] [US2] Build patient appointment status timeline UI in `app/appointments/[appointmentId]/page.tsx` and `components/appointments/appointment-status-timeline.tsx`
+- [X] T035 [US2] Implement appointment detail loading with notification-aware status mapping in `lib/appointments/appointment-detail-service.ts` and `app/appointments/[appointmentId]/page.tsx`
 
 **Checkpoint**: User Story 2 is independently testable with seeded confirmed and canceled appointments plus reminder execution.
 

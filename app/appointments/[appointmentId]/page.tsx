@@ -1,10 +1,9 @@
 import { notFound } from "next/navigation";
 
+import { AppointmentStatusTimeline } from "@/components/appointments/appointment-status-timeline";
 import { AppointmentSummary } from "@/components/appointments/appointment-summary";
 import { PageShell } from "@/components/ui/page-shell";
-import { getAppointment } from "@/lib/db/queries/appointments";
-import { getDoctor } from "@/lib/db/queries/doctors";
-import { getPatient } from "@/lib/db/queries/patients";
+import { getAppointmentDetail } from "@/lib/appointments/appointment-detail-service";
 
 type AppointmentPageProps = {
   params: Promise<{
@@ -14,31 +13,19 @@ type AppointmentPageProps = {
 
 export default async function AppointmentPage({ params }: AppointmentPageProps) {
   const { appointmentId } = await params;
-  const appointment = await getAppointment(appointmentId);
+  try {
+    const appointment = await getAppointmentDetail(appointmentId);
 
-  if (!appointment) {
+    return (
+      <PageShell className="grid gap-6">
+        <AppointmentSummary appointment={appointment} />
+        <AppointmentStatusTimeline
+          events={appointment.notifications}
+          statusCopy={appointment.statusCopy}
+        />
+      </PageShell>
+    );
+  } catch {
     notFound();
   }
-
-  const [patient, doctor] = await Promise.all([
-    getPatient(appointment.patientId),
-    getDoctor(appointment.doctorId)
-  ]);
-
-  if (!patient || !doctor) {
-    notFound();
-  }
-
-  return (
-    <PageShell>
-      <AppointmentSummary
-        appointment={{
-          ...appointment,
-          patient,
-          doctor
-        }}
-      />
-    </PageShell>
-  );
 }
-

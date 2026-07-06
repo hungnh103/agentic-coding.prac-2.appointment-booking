@@ -1,7 +1,11 @@
 import { getPublicAvailability } from "@/lib/availability/public-availability-service";
-import { insertAppointment } from "@/lib/db/queries/appointments";
+import {
+  insertAppointment,
+  updateAppointmentStatus
+} from "@/lib/db/queries/appointments";
 import { insertPatient } from "@/lib/db/queries/patients";
 import { ApiError } from "@/lib/http/api-error";
+import { scheduleConfirmationAndReminder } from "@/lib/notifications/notification-service";
 import { createAppointmentSchema } from "@/lib/validation/appointments";
 
 function isPastDate(date: string) {
@@ -32,13 +36,28 @@ export async function createBooking(input: unknown) {
     notes: payload.patient.notes
   });
 
-  const appointment = await insertAppointment({
-    patientId: patient.id,
-    doctorId: payload.doctorId,
-    appointmentDate: payload.appointmentDate,
-    startTime: payload.startTime,
-    endTime: payload.endTime
-  });
+  let appointment;
+
+  try {
+    appointment = await insertAppointment({
+      patientId: patient.id,
+      doctorId: payload.doctorId,
+      appointmentDate: payload.appointmentDate,
+      startTime: payload.startTime,
+      endTime: payload.endTime
+    });
+  } catch (error) {
+    if (
+      typeof error === "object" &&
+      error !== null &&
+      "code" in error &&
+      error.code === "23505"
+    ) {
+      throw new ApiError(409, "SLOT_UNAVAILABLE", "The chosen slot is no longer available.");
+    }
+
+    throw error;
+  }
 
   return {
     data: {
@@ -47,6 +66,33 @@ export async function createBooking(input: unknown) {
       doctor: availability.doctor
     }
   };
+}
+
+export async function confirmBookingForTesting(appointmentId: string) {
+  const appointment = await updateAppointmentStatus(appointmentId, {
+    status: "confirmed"
+  });
+
+  if (!appointment) {
+    throw new ApiError(404, "APPOINTMENT_NOT_FOUND", "Appointment not found.");
+  }
+
+  await scheduleConfirmationAndReminder(appointmentId);
+
+  return appointment;
+}
+
+export async function cancelBookingForTesting(appointmentId: string, reason: string) {
+  const appointment = await updateAppointmentStatus(appointmentId, {
+    status: "canceled",
+    cancellationReason: reason
+  });
+
+  if (!appointment) {
+    throw new ApiError(404, "APPOINTMENT_NOT_FOUND", "Appointment not found.");
+  }
+
+  return appointment;
 }
 
 export function getDefaultBookingDate() {

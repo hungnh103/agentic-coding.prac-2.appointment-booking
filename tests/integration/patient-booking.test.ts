@@ -1,14 +1,9 @@
-import { beforeEach, describe, expect, it } from "vitest";
+import { describe, expect, it } from "vitest";
 
 import { createBooking, getDefaultBookingDate } from "@/lib/appointments/booking-service";
 import { ApiError } from "@/lib/http/api-error";
-import { resetMockStore } from "@/lib/db/mock-store";
 
 describe("patient booking integration", () => {
-  beforeEach(() => {
-    resetMockStore();
-  });
-
   it("persists booking details for the summary view", async () => {
     const result = await createBooking({
       doctorId: "11111111-1111-1111-1111-111111111111",
