@@ -1,0 +1,7 @@
+DATABASE_URL=postgres://postgres:postgres@127.0.0.1:5432/appointment_booking
+AUTH_SECRET=replace-me
+ADMIN_EMAIL=admin@example.com
+ADMIN_PASSWORD=replace-me
+EMAIL_FROM=clinic@example.com
+EMAIL_PROVIDER=console
+

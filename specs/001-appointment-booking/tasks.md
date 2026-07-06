@@ -24,14 +24,14 @@
 
 **Purpose**: Initialize the application stack, Supabase and Cloudflare delivery configuration, and shared tooling.
 
-- [ ] T001 Initialize the Next.js App Router project, TypeScript config, and core scripts in `package.json`, `next.config.ts`, and `tsconfig.json`
-- [ ] T002 Configure Cloudflare Workers deployment, Cron Triggers, and OpenNext output settings in `open-next.config.ts` and `wrangler.jsonc`
-- [ ] T003 [P] Configure Tailwind CSS, PostCSS, and bright global design tokens in `postcss.config.mjs`, `tailwind.config.ts`, `app/globals.css`, and `components/ui/button.tsx`
-- [ ] T004 [P] Configure linting, Vitest, Playwright, and shared test commands in `eslint.config.mjs`, `vitest.config.ts`, `playwright.config.ts`, and `package.json`
-- [ ] T005 [P] Create application environment templates and runtime parsing in `.env.example` and `lib/config/env.ts`
-- [ ] T006 [P] Configure Supabase local project bootstrap, seed input, and operator defaults in `supabase/config.toml` and `supabase/seed.sql`
-- [ ] T007 [P] Define Cloudflare local secrets, Hyperdrive binding placeholders, and deploy-time variable templates in `.dev.vars.example` and `wrangler.jsonc`
-- [ ] T008 [P] Add shared seed data and performance harness scripts in `scripts/seed.ts` and `scripts/perf/check-availability.ts`
+- [X] T001 Initialize the Next.js App Router project, TypeScript config, and core scripts in `package.json`, `next.config.ts`, and `tsconfig.json`
+- [X] T002 Configure Cloudflare Workers deployment, Cron Triggers, and OpenNext output settings in `open-next.config.ts` and `wrangler.jsonc`
+- [X] T003 [P] Configure Tailwind CSS, PostCSS, and bright global design tokens in `postcss.config.mjs`, `tailwind.config.ts`, `app/globals.css`, and `components/ui/button.tsx`
+- [X] T004 [P] Configure linting, Vitest, Playwright, and shared test commands in `eslint.config.mjs`, `vitest.config.ts`, `playwright.config.ts`, and `package.json`
+- [X] T005 [P] Create application environment templates and runtime parsing in `.env.example` and `lib/config/env.ts`
+- [X] T006 [P] Configure Supabase local project bootstrap, seed input, and operator defaults in `supabase/config.toml` and `supabase/seed.sql`
+- [X] T007 [P] Define Cloudflare local secrets, Hyperdrive binding placeholders, and deploy-time variable templates in `.dev.vars.example` and `wrangler.jsonc`
+- [X] T008 [P] Add shared seed data and performance harness scripts in `scripts/seed.ts` and `scripts/perf/check-availability.ts`
 
 ---
 
@@ -41,14 +41,14 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete.
 
-- [ ] T009 Create Drizzle configuration and database client bootstrap in `drizzle.config.ts` and `lib/db/client.ts`
-- [ ] T010 [P] Define shared database schema modules in `lib/db/schema/admin-users.ts`, `lib/db/schema/doctors.ts`, `lib/db/schema/work-schedules.ts`, `lib/db/schema/time-off.ts`, `lib/db/schema/patients.ts`, `lib/db/schema/appointments.ts`, `lib/db/schema/appointment-audit-log.ts`, `lib/db/schema/notification-events.ts`, and `lib/db/schema/index.ts`
-- [ ] T011 Generate the initial Drizzle migration with required indexes and constraints in `drizzle/0000_initial_schema.sql` and `drizzle/meta/_journal.json`
-- [ ] T012 [P] Implement Auth.js admin authentication and route protection in `lib/auth/config.ts`, `app/api/auth/[...nextauth]/route.ts`, and `middleware.ts`
-- [ ] T013 [P] Implement shared Zod schemas and API error helpers in `lib/validation/appointments.ts`, `lib/validation/schedules.ts`, `lib/http/api-error.ts`, and `lib/http/route-handler.ts`
-- [ ] T014 [P] Implement reusable slot, status, and form feedback UI primitives in `components/availability/slot-grid.tsx`, `components/appointments/status-badge.tsx`, and `components/ui/form-feedback.tsx`
-- [ ] T015 [P] Implement slot generation and availability rule primitives in `lib/availability/slot-generator.ts` and `lib/availability/availability-rules.ts`
-- [ ] T016 Create the root application layout, providers, and admin shell scaffolding in `app/layout.tsx`, `app/providers.tsx`, `app/admin/layout.tsx`, and `components/ui/page-shell.tsx`
+- [X] T009 Create Drizzle configuration and database client bootstrap in `drizzle.config.ts` and `lib/db/client.ts`
+- [X] T010 [P] Define shared database schema modules in `lib/db/schema/admin-users.ts`, `lib/db/schema/doctors.ts`, `lib/db/schema/work-schedules.ts`, `lib/db/schema/time-off.ts`, `lib/db/schema/patients.ts`, `lib/db/schema/appointments.ts`, `lib/db/schema/appointment-audit-log.ts`, `lib/db/schema/notification-events.ts`, and `lib/db/schema/index.ts`
+- [X] T011 Generate the initial Drizzle migration with required indexes and constraints in `drizzle/0000_initial_schema.sql` and `drizzle/meta/_journal.json`
+- [X] T012 [P] Implement Auth.js admin authentication and route protection in `lib/auth/config.ts`, `app/api/auth/[...nextauth]/route.ts`, and `middleware.ts`
+- [X] T013 [P] Implement shared Zod schemas and API error helpers in `lib/validation/appointments.ts`, `lib/validation/schedules.ts`, `lib/http/api-error.ts`, and `lib/http/route-handler.ts`
+- [X] T014 [P] Implement reusable slot, status, and form feedback UI primitives in `components/availability/slot-grid.tsx`, `components/appointments/status-badge.tsx`, and `components/ui/form-feedback.tsx`
+- [X] T015 [P] Implement slot generation and availability rule primitives in `lib/availability/slot-generator.ts` and `lib/availability/availability-rules.ts`
+- [X] T016 Create the root application layout, providers, and admin shell scaffolding in `app/layout.tsx`, `app/providers.tsx`, `app/admin/layout.tsx`, and `components/ui/page-shell.tsx`
 
 **Checkpoint**: Foundation ready. User story work can begin in parallel.
 
@@ -62,19 +62,19 @@
 
 ### Tests for User Story 1
 
-- [ ] T017 [P] [US1] Add contract tests for doctor listing, availability, and booking routes in `tests/contract/doctors.contract.test.ts` and `tests/contract/appointments.contract.test.ts`
-- [ ] T018 [P] [US1] Add integration tests for patient booking, appointment summary data, and slot conflict handling in `tests/integration/patient-booking.test.ts`
-- [ ] T019 [P] [US1] Add unit tests for slot generation and transactional booking safeguards in `tests/unit/availability.test.ts` and `tests/unit/booking-service.test.ts`
-- [ ] T020 [P] [US1] Add Playwright coverage for the responsive patient booking flow in `tests/e2e/patient-booking.spec.ts`
+- [X] T017 [P] [US1] Add contract tests for doctor listing, availability, and booking routes in `tests/contract/doctors.contract.test.ts` and `tests/contract/appointments.contract.test.ts`
+- [X] T018 [P] [US1] Add integration tests for patient booking, appointment summary data, and slot conflict handling in `tests/integration/patient-booking.test.ts`
+- [X] T019 [P] [US1] Add unit tests for slot generation and transactional booking safeguards in `tests/unit/availability.test.ts` and `tests/unit/booking-service.test.ts`
+- [X] T020 [P] [US1] Add Playwright coverage for the responsive patient booking flow in `tests/e2e/patient-booking.spec.ts`
 
 ### Implementation for User Story 1
 
-- [ ] T021 [P] [US1] Implement doctor, schedule, and availability query modules in `lib/db/queries/doctors.ts` and `lib/db/queries/availability.ts`
-- [ ] T022 [P] [US1] Implement patient, appointment, and audit persistence modules in `lib/db/queries/patients.ts` and `lib/db/queries/appointments.ts`
-- [ ] T023 [US1] Implement public availability and booking services in `lib/availability/public-availability-service.ts` and `lib/appointments/booking-service.ts`
-- [ ] T024 [US1] Implement patient API routes in `app/api/doctors/route.ts`, `app/api/doctors/[doctorId]/availability/route.ts`, and `app/api/appointments/route.ts`
-- [ ] T025 [P] [US1] Build patient availability browsing and booking form UI in `app/(marketing)/page.tsx`, `app/doctors/[doctorId]/page.tsx`, `components/availability/availability-calendar.tsx`, and `components/appointments/booking-form.tsx`
-- [ ] T026 [US1] Build the patient appointment summary and resilient loading or error states in `app/appointments/[appointmentId]/page.tsx`, `app/doctors/[doctorId]/loading.tsx`, `app/doctors/[doctorId]/error.tsx`, and `components/appointments/appointment-summary.tsx`
+- [X] T021 [P] [US1] Implement doctor, schedule, and availability query modules in `lib/db/queries/doctors.ts` and `lib/db/queries/availability.ts`
+- [X] T022 [P] [US1] Implement patient, appointment, and audit persistence modules in `lib/db/queries/patients.ts` and `lib/db/queries/appointments.ts`
+- [X] T023 [US1] Implement public availability and booking services in `lib/availability/public-availability-service.ts` and `lib/appointments/booking-service.ts`
+- [X] T024 [US1] Implement patient API routes in `app/api/doctors/route.ts`, `app/api/doctors/[doctorId]/availability/route.ts`, and `app/api/appointments/route.ts`
+- [X] T025 [P] [US1] Build patient availability browsing and booking form UI in `app/(marketing)/page.tsx`, `app/doctors/[doctorId]/page.tsx`, `components/availability/availability-calendar.tsx`, and `components/appointments/booking-form.tsx`
+- [X] T026 [US1] Build the patient appointment summary and resilient loading or error states in `app/appointments/[appointmentId]/page.tsx`, `app/doctors/[doctorId]/loading.tsx`, `app/doctors/[doctorId]/error.tsx`, and `components/appointments/appointment-summary.tsx`
 - [ ] T027 [US1] Add accessibility, copy, and availability performance assertions in `tests/e2e/patient-booking.spec.ts` and `scripts/perf/check-availability.ts`
 
 **Checkpoint**: User Story 1 is fully functional and independently testable as the MVP.

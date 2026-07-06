@@ -1,0 +1,9 @@
+project_id = "appointment-booking"
+
+[db]
+port = 54322
+major_version = 16
+
+[studio]
+port = 54323
+
