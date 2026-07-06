@@ -1,0 +1,470 @@
+openapi: 3.1.0
+info:
+  title: Appointment Booking API
+  version: 0.1.0
+  description: >
+    Public and admin-facing HTTP contracts for the first implementation of the
+    appointment booking application, served by Next.js on Cloudflare Workers
+    and backed by Supabase PostgreSQL.
+servers:
+  - url: http://localhost:3000
+tags:
+  - name: Doctors
+  - name: Appointments
+  - name: Admin
+paths:
+  /api/doctors:
+    get:
+      tags: [Doctors]
+      summary: List active doctors visible to patients
+      responses:
+        '200':
+          description: Active doctors
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/DoctorSummary'
+  /api/doctors/{doctorId}/availability:
+    get:
+      tags: [Doctors]
+      summary: Get bookable slots for a doctor on a given date
+      parameters:
+        - in: path
+          name: doctorId
+          required: true
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: date
+          required: true
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Availability for the requested date
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [doctorId, date, slots]
+                properties:
+                  doctorId:
+                    type: string
+                    format: uuid
+                  date:
+                    type: string
+                    format: date
+                  slots:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AvailabilitySlot'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/appointments:
+    post:
+      tags: [Appointments]
+      summary: Create a new appointment booking request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAppointmentRequest'
+      responses:
+        '201':
+          description: Appointment created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Appointment'
+        '409':
+          description: The chosen slot is no longer available
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/admin/appointments:
+    get:
+      tags: [Admin]
+      summary: List appointments for admin review
+      security:
+        - adminSession: []
+      parameters:
+        - in: query
+          name: status
+          required: false
+          schema:
+            type: string
+            enum: [pending, confirmed, canceled]
+        - in: query
+          name: doctorId
+          required: false
+          schema:
+            type: string
+            format: uuid
+        - in: query
+          name: date
+          required: false
+          schema:
+            type: string
+            format: date
+      responses:
+        '200':
+          description: Appointment list
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Appointment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/admin/appointments/{appointmentId}/confirm:
+    patch:
+      tags: [Admin]
+      summary: Confirm a pending appointment
+      security:
+        - adminSession: []
+      parameters:
+        - in: path
+          name: appointmentId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Appointment confirmed
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Appointment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '409':
+          description: Appointment can no longer be confirmed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+  /api/admin/appointments/{appointmentId}/cancel:
+    patch:
+      tags: [Admin]
+      summary: Cancel an appointment with a reason
+      security:
+        - adminSession: []
+      parameters:
+        - in: path
+          name: appointmentId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [reason]
+              properties:
+                reason:
+                  type: string
+                  minLength: 3
+                  maxLength: 500
+      responses:
+        '200':
+          description: Appointment canceled
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/Appointment'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+  /api/admin/doctors/{doctorId}/work-schedules:
+    post:
+      tags: [Admin]
+      summary: Create a work schedule entry for a doctor
+      security:
+        - adminSession: []
+      parameters:
+        - in: path
+          name: doctorId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkScheduleInput'
+      responses:
+        '201':
+          description: Work schedule created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/WorkSchedule'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+  /api/admin/doctors/{doctorId}/time-off:
+    post:
+      tags: [Admin]
+      summary: Create a time-off entry for a doctor
+      security:
+        - adminSession: []
+      parameters:
+        - in: path
+          name: doctorId
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TimeOffInput'
+      responses:
+        '201':
+          description: Time-off entry created
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [data]
+                properties:
+                  data:
+                    $ref: '#/components/schemas/TimeOff'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+components:
+  securitySchemes:
+    adminSession:
+      type: apiKey
+      in: cookie
+      name: next-auth.session-token
+  responses:
+    Unauthorized:
+      description: Admin authentication is required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+    NotFound:
+      description: Resource not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
+  schemas:
+    DoctorSummary:
+      type: object
+      required: [id, slug, fullName, specialty]
+      properties:
+        id:
+          type: string
+          format: uuid
+        slug:
+          type: string
+        fullName:
+          type: string
+        specialty:
+          type: string
+    AvailabilitySlot:
+      type: object
+      required: [startTime, endTime, status]
+      properties:
+        startTime:
+          type: string
+          pattern: '^\\d{2}:\\d{2}$'
+        endTime:
+          type: string
+          pattern: '^\\d{2}:\\d{2}$'
+        status:
+          type: string
+          enum: [available, unavailable]
+    CreateAppointmentRequest:
+      type: object
+      required:
+        - doctorId
+        - appointmentDate
+        - startTime
+        - patient
+      properties:
+        doctorId:
+          type: string
+          format: uuid
+        appointmentDate:
+          type: string
+          format: date
+        startTime:
+          type: string
+          pattern: '^\\d{2}:\\d{2}$'
+        patient:
+          type: object
+          required: [fullName, phone]
+          properties:
+            fullName:
+              type: string
+              minLength: 2
+              maxLength: 120
+            phone:
+              type: string
+              minLength: 8
+              maxLength: 20
+            email:
+              type: string
+              format: email
+            notes:
+              type: string
+              maxLength: 1000
+    Appointment:
+      type: object
+      required:
+        - id
+        - referenceCode
+        - doctorId
+        - patientId
+        - appointmentDate
+        - startTime
+        - endTime
+        - status
+      properties:
+        id:
+          type: string
+          format: uuid
+        referenceCode:
+          type: string
+        doctorId:
+          type: string
+          format: uuid
+        patientId:
+          type: string
+          format: uuid
+        appointmentDate:
+          type: string
+          format: date
+        startTime:
+          type: string
+          pattern: '^\\d{2}:\\d{2}$'
+        endTime:
+          type: string
+          pattern: '^\\d{2}:\\d{2}$'
+        status:
+          type: string
+          enum: [pending, confirmed, canceled]
+        cancellationReason:
+          type: string
+          nullable: true
+    WorkScheduleInput:
+      type: object
+      required: [dayOfWeek, startTime, endTime, effectiveFrom]
+      properties:
+        dayOfWeek:
+          type: integer
+          minimum: 0
+          maximum: 6
+        startTime:
+          type: string
+          pattern: '^\\d{2}:\\d{2}$'
+        endTime:
+          type: string
+          pattern: '^\\d{2}:\\d{2}$'
+        effectiveFrom:
+          type: string
+          format: date
+        effectiveTo:
+          type: string
+          format: date
+          nullable: true
+    WorkSchedule:
+      allOf:
+        - $ref: '#/components/schemas/WorkScheduleInput'
+        - type: object
+          required: [id, doctorId, isActive]
+          properties:
+            id:
+              type: string
+              format: uuid
+            doctorId:
+              type: string
+              format: uuid
+            isActive:
+              type: boolean
+    TimeOffInput:
+      type: object
+      required: [startsAt, endsAt, reason]
+      properties:
+        startsAt:
+          type: string
+          format: date-time
+        endsAt:
+          type: string
+          format: date-time
+        reason:
+          type: string
+          minLength: 3
+          maxLength: 500
+    TimeOff:
+      allOf:
+        - $ref: '#/components/schemas/TimeOffInput'
+        - type: object
+          required: [id, doctorId, status]
+          properties:
+            id:
+              type: string
+              format: uuid
+            doctorId:
+              type: string
+              format: uuid
+            status:
+              type: string
+              enum: [scheduled, canceled]
+    ErrorResponse:
+      type: object
+      required: [error]
+      properties:
+        error:
+          type: object
+          required: [code, message]
+          properties:
+            code:
+              type: string
+            message:
+              type: string
