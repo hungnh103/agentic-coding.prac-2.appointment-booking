@@ -86,7 +86,9 @@ performance targets or temporary thresholds. Every implementation plan MUST
 include a constitution check that confirms code quality gates, required test
 coverage, UX consistency impacts, and performance validation. Every task list
 MUST include the work needed to satisfy those gates, not only the happy-path
-implementation tasks.
+implementation tasks. All generated project documentation and Markdown
+artifacts MUST be written in English unless a specific artifact explicitly
+states a different required language.
 
 ## Review and Release Workflow
 
