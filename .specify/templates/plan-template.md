@@ -40,7 +40,16 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+- **Code Quality**: Identify touched modules, applicable lint/format/static
+  analysis checks, and any architectural deviation requiring justification.
+- **Testing**: List required unit, integration, and contract coverage for the
+  feature. Record any omitted layer with explicit rationale and compensating
+  validation.
+- **User Experience Consistency**: Describe impacted user flows, reused
+  patterns, accessibility/error-state considerations, and any new pattern that
+  must be documented.
+- **Performance**: State measurable budgets or temporary thresholds, the
+  baseline if known, and how the change will be validated before release.
 
 ## Project Structure
 

@@ -31,6 +31,9 @@
 
 **Independent Test**: [Describe how this can be tested independently - e.g., "Can be fully tested by [specific action] and delivers [specific value]"]
 
+**UX Consistency Notes**: [Describe reused patterns, copy conventions,
+accessibility expectations, and affected empty/error states]
+
 **Acceptance Scenarios**:
 
 1. **Given** [initial state], **When** [action], **Then** [expected outcome]
@@ -46,6 +49,9 @@
 
 **Independent Test**: [Describe how this can be tested independently]
 
+**UX Consistency Notes**: [Describe reused patterns, copy conventions,
+accessibility expectations, and affected empty/error states]
+
 **Acceptance Scenarios**:
 
 1. **Given** [initial state], **When** [action], **Then** [expected outcome]
@@ -59,6 +65,9 @@
 **Why this priority**: [Explain the value and why it has this priority level]
 
 **Independent Test**: [Describe how this can be tested independently]
+
+**UX Consistency Notes**: [Describe reused patterns, copy conventions,
+accessibility expectations, and affected empty/error states]
 
 **Acceptance Scenarios**:
 
@@ -77,6 +86,8 @@
 
 - What happens when [boundary condition]?
 - How does system handle [error scenario]?
+- How does the experience remain understandable and consistent when the primary
+  action is slow, unavailable, or partially successful?
 
 ## Requirements *(mandatory)*
 
@@ -92,11 +103,15 @@
 - **FR-003**: Users MUST be able to [key interaction, e.g., "reset their password"]
 - **FR-004**: System MUST [data requirement, e.g., "persist user preferences"]
 - **FR-005**: System MUST [behavior, e.g., "log all security events"]
+- **FR-006**: System MUST preserve or intentionally update existing UX
+  patterns, terminology, and accessibility behavior for affected journeys.
+- **FR-007**: System MUST define the automated test coverage needed to validate
+  critical behavior changes.
 
 *Example of marking unclear requirements:*
 
-- **FR-006**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
-- **FR-007**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
+- **FR-008**: System MUST authenticate users via [NEEDS CLARIFICATION: auth method not specified - email/password, SSO, OAuth?]
+- **FR-009**: System MUST retain user data for [NEEDS CLARIFICATION: retention period not specified]
 
 ### Key Entities *(include if feature involves data)*
 
@@ -116,6 +131,8 @@
 - **SC-002**: [Measurable metric, e.g., "System handles 1000 concurrent users without degradation"]
 - **SC-003**: [User satisfaction metric, e.g., "90% of users successfully complete primary task on first attempt"]
 - **SC-004**: [Business metric, e.g., "Reduce support tickets related to [X] by 50%"]
+- **SC-005**: [Performance metric for the changed journey, e.g., "95% of users
+  see results within 2 seconds under normal load"]
 
 ## Assumptions
 
@@ -129,3 +146,5 @@
 - [Assumption about scope boundaries, e.g., "Mobile support is out of scope for v1"]
 - [Assumption about data/environment, e.g., "Existing authentication system will be reused"]
 - [Dependency on existing system/service, e.g., "Requires access to the existing user profile API"]
+- [Assumption about UX baseline or performance baseline when an exact measured
+  benchmark does not yet exist]
