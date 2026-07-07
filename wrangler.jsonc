@@ -17,11 +17,10 @@
   "triggers": {
     "crons": ["*/15 * * * *"]
   },
-  "hyperdrive": [
-    {
-      "binding": "HYPERDRIVE",
-      "id": "replace-with-hyperdrive-id"
-    }
-  ]
+  // "hyperdrive": [
+  //   {
+  //     "binding": "HYPERDRIVE",
+  //     "id": "replace-with-hyperdrive-id"
+  //   }
+  // ]
 }
-
