@@ -15,9 +15,11 @@ export async function getPublicAvailability(doctorId: string, date: string) {
     throw new ApiError(404, "DOCTOR_NOT_FOUND", "Doctor not found.");
   }
 
-  const schedules = await getDoctorSchedules(doctorId);
+  const [schedules, bookedSlots] = await Promise.all([
+    getDoctorSchedules(doctorId),
+    getBookedSlots(doctorId, date)
+  ]);
   const matchingSchedules = schedules.filter((schedule) => schedule.dayOfWeek === getDayOfWeek(date));
-  const bookedSlots = await getBookedSlots(doctorId, date);
 
   const slots = matchingSchedules.flatMap((schedule) =>
     filterAvailableSlots(
@@ -36,4 +38,3 @@ export async function getPublicAvailability(doctorId: string, date: string) {
     }))
   };
 }
-

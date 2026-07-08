@@ -25,5 +25,5 @@ export async function GET(request: Request, context: RouteContext) {
       date: availability.date,
       slots: availability.slots
     };
-  });
+  }, { routeName: "doctor-availability" });
 }

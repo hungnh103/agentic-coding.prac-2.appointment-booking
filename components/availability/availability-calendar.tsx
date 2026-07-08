@@ -9,16 +9,22 @@ import { FormFeedback } from "@/components/ui/form-feedback";
 type AvailabilityCalendarProps = {
   doctorId: string;
   initialDate: string;
+  initialSlots: SlotGridItem[];
   onSelect: (slot: SlotGridItem, date: string) => void;
 };
 
-export function AvailabilityCalendar({ doctorId, initialDate, onSelect }: AvailabilityCalendarProps) {
+export function AvailabilityCalendar({ doctorId, initialDate, initialSlots, onSelect }: AvailabilityCalendarProps) {
   const [date, setDate] = useState(initialDate);
-  const [slots, setSlots] = useState<SlotGridItem[]>([]);
+  const [slots, setSlots] = useState<SlotGridItem[]>(initialSlots);
   const [error, setError] = useState<string>();
-  const [selectedStartTime, setSelectedStartTime] = useState<string>();
+  const [selectedStartTime, setSelectedStartTime] = useState<string>(initialSlots[0]?.startTime);
 
   useEffect(() => {
+    if (date === initialDate) {
+      setSlots(initialSlots);
+      return;
+    }
+
     const controller = new AbortController();
 
     async function loadAvailability() {
@@ -41,7 +47,7 @@ export function AvailabilityCalendar({ doctorId, initialDate, onSelect }: Availa
     });
 
     return () => controller.abort();
-  }, [date, doctorId]);
+  }, [date, doctorId, initialDate, initialSlots]);
 
   return (
     <section className="space-y-4 rounded-[1.75rem] bg-white/80 p-6">
@@ -72,4 +78,3 @@ export function AvailabilityCalendar({ doctorId, initialDate, onSelect }: Availa
     </section>
   );
 }
-

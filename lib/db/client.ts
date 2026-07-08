@@ -20,6 +20,10 @@ const globalForDb = globalThis as typeof globalThis & {
   dbRuntimePromise?: Promise<DbRuntime>;
 };
 
+function isCloudflareRuntime() {
+  return "Cloudflare" in globalThis;
+}
+
 function createSqlClient(connectionString: string) {
   return postgres(connectionString, {
     prepare: false,
@@ -56,6 +60,10 @@ async function createDbRuntime(): Promise<DbRuntime> {
 }
 
 async function getDbRuntime() {
+  if (isCloudflareRuntime()) {
+    return createDbRuntime();
+  }
+
   globalForDb.dbRuntimePromise ??= createDbRuntime();
   return globalForDb.dbRuntimePromise;
 }

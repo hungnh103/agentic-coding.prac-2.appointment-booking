@@ -7,7 +7,7 @@ export async function POST(request: Request) {
   const response = await withRouteHandler(async () => {
     const payload = await request.json();
     return createBooking(payload);
-  });
+  }, { routeName: "create-appointment" });
 
   if (!response.ok) {
     return response;

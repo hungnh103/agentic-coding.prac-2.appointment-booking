@@ -9,12 +9,14 @@ import type { SlotGridItem } from "@/components/availability/slot-grid";
 type DoctorBookingExperienceProps = {
   doctorId: string;
   initialDate: string;
+  initialSlots: SlotGridItem[];
   initialSlot: SlotGridItem;
 };
 
 export function DoctorBookingExperience({
   doctorId,
   initialDate,
+  initialSlots,
   initialSlot
 }: DoctorBookingExperienceProps) {
   const [selection, setSelection] = useState({
@@ -28,6 +30,7 @@ export function DoctorBookingExperience({
       <AvailabilityCalendar
         doctorId={doctorId}
         initialDate={initialDate}
+        initialSlots={initialSlots}
         onSelect={(slot, date) => {
           setSelection({
             date,
