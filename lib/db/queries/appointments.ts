@@ -2,7 +2,7 @@ import { randomUUID } from "node:crypto";
 
 import { eq } from "drizzle-orm";
 
-import { db } from "@/lib/db/client";
+import { getDb } from "@/lib/db/client";
 import { appointments } from "@/lib/db/schema";
 
 type CreateAppointmentInput = {
@@ -18,6 +18,7 @@ function createReferenceCode() {
 }
 
 export async function insertAppointment(input: CreateAppointmentInput) {
+  const db = await getDb();
   const [appointment] = await db
     .insert(appointments)
     .values({
@@ -30,6 +31,7 @@ export async function insertAppointment(input: CreateAppointmentInput) {
 }
 
 export async function getAppointment(appointmentId: string) {
+  const db = await getDb();
   const [appointment] = await db
     .select()
     .from(appointments)
@@ -39,6 +41,7 @@ export async function getAppointment(appointmentId: string) {
 }
 
 export async function listAppointments() {
+  const db = await getDb();
   return db.select().from(appointments);
 }
 
@@ -49,6 +52,7 @@ export async function updateAppointmentStatus(
     cancellationReason?: string;
   }
 ) {
+  const db = await getDb();
   const values =
     input.status === "confirmed"
       ? {

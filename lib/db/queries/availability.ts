@@ -1,9 +1,10 @@
 import { and, eq, ne } from "drizzle-orm";
 
-import { db } from "@/lib/db/client";
+import { getDb } from "@/lib/db/client";
 import { appointments, workSchedules } from "@/lib/db/schema";
 
 export async function getDoctorSchedules(doctorId: string) {
+  const db = await getDb();
   return db
     .select()
     .from(workSchedules)
@@ -11,6 +12,7 @@ export async function getDoctorSchedules(doctorId: string) {
 }
 
 export async function getBookedSlots(doctorId: string, appointmentDate: string) {
+  const db = await getDb();
   return db
     .select()
     .from(appointments)

@@ -19,7 +19,7 @@ export default async function DoctorPage({ params }: DoctorPageProps) {
     <PageShell className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
       <section className="space-y-6">
         <div className="rounded-[2rem] bg-slate-950 p-8 text-white shadow-soft">
-          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-brand-200">Doctor availability</p>
+          <p className="text-sm font-semibold uppercase tracking-[0.24em] text-brand-200">Doctor availability (hyperdrive enable)</p>
           <h1 className="mt-3 text-4xl font-semibold">{availability.doctor.fullName}</h1>
           <p className="mt-2 text-lg text-white/75">{availability.doctor.specialty}</p>
           <p className="mt-4 max-w-2xl text-white/70">{availability.doctor.bio}</p>

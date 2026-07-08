@@ -1,6 +1,6 @@
 import { and, asc, eq, lte } from "drizzle-orm";
 
-import { db } from "@/lib/db/client";
+import { getDb } from "@/lib/db/client";
 import { notificationEvents } from "@/lib/db/schema";
 
 type CreateNotificationEventInput = {
@@ -14,6 +14,7 @@ type CreateNotificationEventInput = {
 };
 
 export async function insertNotificationEvent(input: CreateNotificationEventInput) {
+  const db = await getDb();
   const [event] = await db
     .insert(notificationEvents)
     .values({
@@ -26,6 +27,7 @@ export async function insertNotificationEvent(input: CreateNotificationEventInpu
 }
 
 export async function getNotificationEventsForAppointment(appointmentId: string) {
+  const db = await getDb();
   return db
     .select()
     .from(notificationEvents)
@@ -34,6 +36,7 @@ export async function getNotificationEventsForAppointment(appointmentId: string)
 }
 
 export async function getPendingReminderEvents(atIso: string) {
+  const db = await getDb();
   return db
     .select()
     .from(notificationEvents)
@@ -55,6 +58,7 @@ export async function patchNotificationEvent(
     sentAt: string;
   }>
 ) {
+  const db = await getDb();
   const [event] = await db
     .update(notificationEvents)
     .set({

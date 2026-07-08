@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
 
-import { db } from "@/lib/db/client";
+import { getDb } from "@/lib/db/client";
 import { patients } from "@/lib/db/schema";
 
 type CreatePatientInput = {
@@ -11,11 +11,13 @@ type CreatePatientInput = {
 };
 
 export async function insertPatient(input: CreatePatientInput) {
+  const db = await getDb();
   const [patient] = await db.insert(patients).values(input).returning();
   return patient;
 }
 
 export async function getPatient(patientId: string) {
+  const db = await getDb();
   const [patient] = await db.select().from(patients).where(eq(patients.id, patientId));
   return patient ?? null;
 }
