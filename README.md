@@ -29,6 +29,7 @@ PATH="$HOME/.nvm/versions/node/v24.17.0/bin:$PATH" pnpm dev
 
 Default admin credentials come from `.env`:
 
+- `ADMIN_USER_ID=aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa`
 - `ADMIN_EMAIL=admin@example.com`
 - `ADMIN_PASSWORD=password123`
 

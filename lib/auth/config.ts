@@ -19,7 +19,7 @@ export const authConfig: NextAuthConfig = {
           credentials.password === env.ADMIN_PASSWORD
         ) {
           return {
-            id: "local-admin",
+            id: env.ADMIN_USER_ID,
             email: env.ADMIN_EMAIL,
             name: "Clinic Admin",
             role: "admin"

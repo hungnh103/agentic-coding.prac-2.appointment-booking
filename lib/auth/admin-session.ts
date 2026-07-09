@@ -1,4 +1,6 @@
 import { ApiError } from "@/lib/http/api-error";
+import { env } from "@/lib/config/env";
+import { z } from "zod";
 
 type AdminSession = {
   id: string;
@@ -17,14 +19,14 @@ function getTestAdminSession(request?: Request): AdminSession | null {
   }
 
   return {
-    id: "aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa",
+    id: env.ADMIN_USER_ID,
     email: "admin@example.com",
     name: "Clinic Admin",
     role: "admin"
   };
 }
 
-export async function requireAdminSession(request?: Request) {
+export async function requireAdminSession(request?: Request): Promise<AdminSession> {
   const testSession = getTestAdminSession(request);
   if (testSession) {
     return testSession;
@@ -38,10 +40,14 @@ export async function requireAdminSession(request?: Request) {
     throw new ApiError(401, "UNAUTHORIZED", "Admin authentication is required.");
   }
 
+  const sessionUserId = session.user.id;
+  const parsedAdminId = z.string().uuid().safeParse(sessionUserId);
+  const normalizedAdminId = parsedAdminId.success ? parsedAdminId.data : env.ADMIN_USER_ID;
+
   return {
-    id: session.user.id ?? "local-admin",
+    id: normalizedAdminId,
     email: session.user.email,
     name: session.user.name,
-    role
+    role: "admin"
   } satisfies AdminSession;
 }
