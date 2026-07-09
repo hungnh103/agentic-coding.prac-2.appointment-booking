@@ -21,7 +21,7 @@
     {
       "binding": "HYPERDRIVE",
       "id": "075e95ab63444193b2b65807a02fff56",
-      "localConnectionString": "postgres://postgres:postgres@127.0.0.1:5432/appointment_booking"
+      "localConnectionString": "postgresql://postgres.ekhmghfxutdmetnclvsn:BYyeMJBrInTlEW1G@aws-1-ap-southeast-2.pooler.supabase.com:6543/postgres?pgbouncer=true"
     }
   ]
 }
