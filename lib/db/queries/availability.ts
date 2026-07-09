@@ -1,7 +1,7 @@
 import { and, eq, ne } from "drizzle-orm";
 
 import { getDb } from "@/lib/db/client";
-import { appointments, workSchedules } from "@/lib/db/schema";
+import { appointments, timeOff, workSchedules } from "@/lib/db/schema";
 
 export async function getDoctorSchedules(doctorId: string) {
   const db = await getDb();
@@ -23,4 +23,12 @@ export async function getBookedSlots(doctorId: string, appointmentDate: string) 
         ne(appointments.status, "canceled")
       )
     );
+}
+
+export async function getDoctorTimeOff(doctorId: string) {
+  const db = await getDb();
+  return db
+    .select()
+    .from(timeOff)
+    .where(and(eq(timeOff.doctorId, doctorId), eq(timeOff.status, "scheduled")));
 }

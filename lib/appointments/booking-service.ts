@@ -6,6 +6,7 @@ import {
 import { insertPatient } from "@/lib/db/queries/patients";
 import { ApiError } from "@/lib/http/api-error";
 import { scheduleConfirmationAndReminder } from "@/lib/notifications/notification-service";
+import { logInfo } from "@/lib/observability/logger";
 import { createAppointmentSchema } from "@/lib/validation/appointments";
 
 function isPastDate(date: string) {
@@ -59,6 +60,13 @@ export async function createBooking(input: unknown) {
     throw error;
   }
 
+  logInfo("booking.created", {
+    appointmentId: appointment.id,
+    doctorId: appointment.doctorId,
+    appointmentDate: appointment.appointmentDate,
+    startTime: appointment.startTime
+  });
+
   return {
     data: {
       ...appointment,
@@ -78,6 +86,7 @@ export async function confirmBookingForTesting(appointmentId: string) {
   }
 
   await scheduleConfirmationAndReminder(appointmentId);
+  logInfo("booking.confirmed_for_testing", { appointmentId });
 
   return appointment;
 }
@@ -92,6 +101,7 @@ export async function cancelBookingForTesting(appointmentId: string, reason: str
     throw new ApiError(404, "APPOINTMENT_NOT_FOUND", "Appointment not found.");
   }
 
+  logInfo("booking.canceled_for_testing", { appointmentId, reason });
   return appointment;
 }
 

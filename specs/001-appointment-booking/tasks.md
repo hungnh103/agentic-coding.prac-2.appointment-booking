@@ -113,20 +113,20 @@
 
 ### Tests for User Story 3
 
-- [ ] T036 [P] [US3] Add contract tests for admin appointment review and doctor schedule routes in `tests/contract/admin-appointments.contract.test.ts` and `tests/contract/admin-schedules.contract.test.ts`
-- [ ] T037 [P] [US3] Add integration tests for admin approval, cancellation, work schedules, and time-off conflicts in `tests/integration/admin-scheduling.test.ts`
-- [ ] T038 [P] [US3] Add unit tests for schedule validation and appointment state transitions in `tests/unit/schedule-management.test.ts` and `tests/unit/appointment-status-service.test.ts`
-- [ ] T039 [P] [US3] Add Playwright coverage for admin appointment review and doctor schedule management in `tests/e2e/admin-scheduling.spec.ts`
+- [X] T036 [P] [US3] Add contract tests for admin appointment review and doctor schedule routes in `tests/contract/admin-appointments.contract.test.ts` and `tests/contract/admin-schedules.contract.test.ts`
+- [X] T037 [P] [US3] Add integration tests for admin approval, cancellation, work schedules, and time-off conflicts in `tests/integration/admin-scheduling.test.ts`
+- [X] T038 [P] [US3] Add unit tests for schedule validation and appointment state transitions in `tests/unit/schedule-management.test.ts` and `tests/unit/appointment-status-service.test.ts`
+- [X] T039 [P] [US3] Add Playwright coverage for admin appointment review and doctor schedule management in `tests/e2e/admin-scheduling.spec.ts`
 
 ### Implementation for User Story 3
 
-- [ ] T040 [P] [US3] Implement admin appointment and doctor schedule query modules in `lib/db/queries/admin-appointments.ts` and `lib/db/queries/admin-schedules.ts`
-- [ ] T041 [US3] Implement appointment decision and schedule management services in `lib/appointments/appointment-status-service.ts` and `lib/availability/admin-schedule-service.ts`
-- [ ] T042 [US3] Implement admin appointment API routes in `app/api/admin/appointments/route.ts`, `app/api/admin/appointments/[appointmentId]/confirm/route.ts`, and `app/api/admin/appointments/[appointmentId]/cancel/route.ts`
-- [ ] T043 [US3] Implement admin doctor schedule API routes in `app/api/admin/doctors/[doctorId]/work-schedules/route.ts` and `app/api/admin/doctors/[doctorId]/time-off/route.ts`
-- [ ] T044 [P] [US3] Build admin authentication and appointment review UI in `app/admin/login/page.tsx`, `app/admin/appointments/page.tsx`, and `components/admin/appointment-review-table.tsx`
-- [ ] T045 [P] [US3] Build doctor schedule and leave management UI in `app/admin/doctors/[doctorId]/schedule/page.tsx`, `components/admin/work-schedule-form.tsx`, and `components/admin/time-off-form.tsx`
-- [ ] T046 [US3] Add conflict warnings, cancellation reason UX, and mobile admin states in `components/admin/appointment-decision-dialog.tsx`, `components/admin/schedule-conflict-banner.tsx`, and `app/admin/appointments/page.tsx`
+- [X] T040 [P] [US3] Implement admin appointment and doctor schedule query modules in `lib/db/queries/admin-appointments.ts` and `lib/db/queries/admin-schedules.ts`
+- [X] T041 [US3] Implement appointment decision and schedule management services in `lib/appointments/appointment-status-service.ts` and `lib/availability/admin-schedule-service.ts`
+- [X] T042 [US3] Implement admin appointment API routes in `app/api/admin/appointments/route.ts`, `app/api/admin/appointments/[appointmentId]/confirm/route.ts`, and `app/api/admin/appointments/[appointmentId]/cancel/route.ts`
+- [X] T043 [US3] Implement admin doctor schedule API routes in `app/api/admin/doctors/[doctorId]/work-schedules/route.ts` and `app/api/admin/doctors/[doctorId]/time-off/route.ts`
+- [X] T044 [P] [US3] Build admin authentication and appointment review UI in `app/admin/login/page.tsx`, `app/admin/appointments/page.tsx`, and `components/admin/appointment-review-table.tsx`
+- [X] T045 [P] [US3] Build doctor schedule and leave management UI in `app/admin/doctors/[doctorId]/schedule/page.tsx`, `components/admin/work-schedule-form.tsx`, and `components/admin/time-off-form.tsx`
+- [X] T046 [US3] Add conflict warnings, cancellation reason UX, and mobile admin states in `components/admin/appointment-decision-dialog.tsx`, `components/admin/schedule-conflict-banner.tsx`, and `app/admin/appointments/page.tsx`
 
 **Checkpoint**: User Story 3 is fully functional and independently testable for the admin workflow.
 
@@ -136,12 +136,12 @@
 
 **Purpose**: Finish release-quality validation, observability, accessibility, and operational hardening across all stories.
 
-- [ ] T047 [P] Document local setup, Supabase provisioning, and Cloudflare release workflow in `README.md` and `docs/deploy/production.md`
-- [ ] T048 Run the accessibility and UX consistency pass across patient and admin flows in `components/ui/skip-link.tsx`, `app/(marketing)/page.tsx`, and `app/admin/appointments/page.tsx`
-- [ ] T049 Harden logging and global error handling for booking, notification, and admin flows in `lib/observability/logger.ts` and `app/global-error.tsx`
-- [ ] T050 [P] Add quickstart smoke automation for local and Workers preview flows in `scripts/smoke/quickstart-check.ts` and `package.json`
-- [ ] T051 Validate seeded load and mutation performance thresholds in `scripts/perf/check-availability.ts` and `scripts/perf/check-booking-mutation.ts`
-- [ ] T052 Harden booking abuse and admin session protections in `middleware.ts` and `lib/http/rate-limit.ts`
+- [X] T047 [P] Document local setup, Supabase provisioning, and Cloudflare release workflow in `README.md` and `docs/deploy/production.md`
+- [X] T048 Run the accessibility and UX consistency pass across patient and admin flows in `components/ui/skip-link.tsx`, `app/(marketing)/page.tsx`, and `app/admin/appointments/page.tsx`
+- [X] T049 Harden logging and global error handling for booking, notification, and admin flows in `lib/observability/logger.ts` and `app/global-error.tsx`
+- [X] T050 [P] Add quickstart smoke automation for local and Workers preview flows in `scripts/smoke/quickstart-check.ts` and `package.json`
+- [X] T051 Validate seeded load and mutation performance thresholds in `scripts/perf/check-availability.ts` and `scripts/perf/check-booking-mutation.ts`
+- [X] T052 Harden booking abuse and admin session protections in `middleware.ts` and `lib/http/rate-limit.ts`
 - [ ] T053 Configure Supabase migration rollout automation and failure handling in `.github/workflows/deploy.yml` and `scripts/deploy/run-supabase-migrations.ts`
 - [ ] T054 Configure Cloudflare Workers build, deploy verification, and secret handoff steps in `.github/workflows/deploy.yml` and `scripts/deploy/verify-workers-release.ts`
 

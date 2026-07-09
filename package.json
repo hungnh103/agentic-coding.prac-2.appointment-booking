@@ -21,7 +21,9 @@
     "cf:preview": "opennextjs-cloudflare build && wrangler dev",
     "deploy": "opennextjs-cloudflare build && wrangler deploy",
     "seed": "pnpm db:seed",
-    "perf:availability": "tsx scripts/perf/check-availability.ts"
+    "smoke:quickstart": "tsx scripts/smoke/quickstart-check.ts",
+    "perf:availability": "tsx scripts/perf/check-availability.ts",
+    "perf:booking": "tsx scripts/perf/check-booking-mutation.ts"
   },
   "dependencies": {
     "@auth/core": "^0.37.4",

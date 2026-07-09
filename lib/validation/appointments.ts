@@ -17,3 +17,12 @@ export const appointmentIdParamsSchema = z.object({
   appointmentId: z.string().uuid()
 });
 
+export const adminAppointmentFiltersSchema = z.object({
+  status: z.enum(["pending", "confirmed", "canceled"]).optional(),
+  doctorId: z.string().uuid().optional(),
+  date: z.string().date().optional()
+});
+
+export const cancelAppointmentSchema = z.object({
+  reason: z.string().trim().min(3).max(500)
+});

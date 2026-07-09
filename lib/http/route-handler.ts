@@ -1,24 +1,12 @@
 import { NextResponse } from "next/server";
 
 import { ApiError } from "@/lib/http/api-error";
+import { logError, logWarn } from "@/lib/observability/logger";
 
 type RouteHandlerOptions = {
   routeName?: string;
   timeoutMs?: number;
 };
-
-function getErrorDetails(error: unknown) {
-  if (error instanceof Error) {
-    return {
-      message: error.message,
-      stack: error.stack
-    };
-  }
-
-  return {
-    message: String(error)
-  };
-}
 
 export async function withRouteHandler<T>(handler: () => Promise<T>, options: RouteHandlerOptions = {}) {
   const routeName = options.routeName ?? "unknown-route";
@@ -40,7 +28,8 @@ export async function withRouteHandler<T>(handler: () => Promise<T>, options: Ro
     const durationMs = Date.now() - startedAt;
 
     if (error instanceof ApiError) {
-      console.warn(`[route:${routeName}] handled api error`, {
+      logWarn("route.api_error", {
+        routeName,
         status: error.status,
         code: error.code,
         durationMs
@@ -57,9 +46,9 @@ export async function withRouteHandler<T>(handler: () => Promise<T>, options: Ro
       );
     }
 
-    console.error(`[route:${routeName}] unhandled error`, {
+    logError("route.unhandled_error", error, {
+      routeName,
       durationMs,
-      ...getErrorDetails(error)
     });
 
     return NextResponse.json(

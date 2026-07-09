@@ -6,7 +6,7 @@ export const workScheduleSchema = z.object({
   startTime: z.string().regex(/^\d{2}:\d{2}$/),
   endTime: z.string().regex(/^\d{2}:\d{2}$/),
   effectiveFrom: z.string().date(),
-  effectiveTo: z.string().date().optional()
+  effectiveTo: z.string().date().optional().or(z.literal(""))
 });
 
 export const timeOffSchema = z.object({
@@ -15,4 +15,3 @@ export const timeOffSchema = z.object({
   endsAt: z.string().datetime(),
   reason: z.string().trim().min(3).max(500)
 });
-

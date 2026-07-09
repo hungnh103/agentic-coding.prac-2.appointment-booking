@@ -34,6 +34,8 @@ export const authConfig: NextAuthConfig = {
     jwt({ token, user }) {
       if (user) {
         token.role = "admin";
+        token.name = user.name;
+        token.email = user.email;
       }
 
       return token;
@@ -42,6 +44,9 @@ export const authConfig: NextAuthConfig = {
       if (session.user) {
         session.user = {
           ...session.user,
+          id: token.sub,
+          name: token.name,
+          email: token.email,
           role: token.role as string | undefined
         } as typeof session.user;
       }
